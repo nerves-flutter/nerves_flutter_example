@@ -1,31 +1,43 @@
-import 'dart:convert';
 import 'dart:io';
 
-import 'package:http/http.dart' as http;
+import 'package:flutter_app/generated/rpc_schema.pbgrpc.dart';
+import 'package:grpc/grpc.dart';
 
 class API {
-  static String _baseUri = "http://localhost:4000";
+  static String _baseHostname = "127.0.0.1";
+  static ClientChannel? _channel;
+  static RPCClient? _client;
+  static final Empty _empty = Empty.create();
 
   static updateBaseURI() {
     final env = Platform.environment;
-    if (env.keys.contains("BASE_API_URI")) {
-      _baseUri = env["BASE_API_URI"]!;
+    if (env.keys.contains("BASE_RPC_HOSTNAME")) {
+      _baseHostname = env["BASE_RPC_HOSTNAME"]!;
     }
+
+    // Create the gRPC channel and stub
+    _channel = ClientChannel(_baseHostname,
+        port: 50051,
+        options:
+            const ChannelOptions(credentials: ChannelCredentials.insecure()));
+
+    _client = RPCClient(_channel!,
+        options: CallOptions(timeout: const Duration(seconds: 30)));
   }
 
-  static Future<Map> getSystemInfo() async {
-    final resp = await http.get(Uri.parse("$_baseUri/api/system_info"));
-    return json.decode(resp.body) as Map;
+  static Future<SystemInformation> getSystemInfo() async {
+    return await _client!.getSystemInfo(_empty);
   }
 
-  static Future<Map> getWiFiNetworks() async {
-    final resp = await http.get(Uri.parse("$_baseUri/api/wifi_scan"));
-    return json.decode(resp.body) as Map;
+  static Future<WiFiScanResult> getWiFiNetworks() async {
+    return await _client!.wifiScan(_empty);
   }
 
-  static Future<Map> setupWiFi(String networkSSID, String psk) async {
-    final resp = await http.post(Uri.parse("$_baseUri/api/wifi_setup"),
-        body: {"ssid": networkSSID, "psk": psk});
-    return json.decode(resp.body) as Map;
+  static Future<Empty> rebootSystem() async {
+    return await _client!.rebootSystem(_empty);
+  }
+
+  static Future<Empty> haltSystem() async {
+    return await _client!.haltSystem(_empty);
   }
 }

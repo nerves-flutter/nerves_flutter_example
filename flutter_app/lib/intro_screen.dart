@@ -16,9 +16,10 @@ class IntroScreen extends HookWidget {
         },
         child: Text("Start Demo", style: theme.textTheme.titleLarge));
 
-    const nervesLogoWrapped = FadeIn(duration: 1500, child: NervesLogo());
+    const nervesLogoWrapped =
+        FadeIn(duration: 1500, startDelay: 10000, child: NervesLogo());
     final continueButtonWrapped =
-        FadeIn(duration: 1500, startDelay: 2000, child: continueButton);
+        FadeIn(duration: 1500, startDelay: 12000, child: continueButton);
 
     return Column(
         mainAxisSize: MainAxisSize.min,

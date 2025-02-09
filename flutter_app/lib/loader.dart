@@ -26,7 +26,7 @@ class Loader extends HookWidget {
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [Text(this.text)])
+                  children: [Text(text)])
             ])));
   }
 }

@@ -11,10 +11,13 @@ defmodule NervesFlutterExample.Application do
     # NOTE: This will listen on a LAN accessieble port (0.0.0.0:4000)
     # This is only for easy debugging on remote instances of the Flutter app.
     # In production you would want to limit the connection to localhost, or to a UNIX socket file.
-    api_server = {Bandit, plug: NervesFlutterExample.Server, port: 4000, ip: {0, 0, 0, 0}}
+
+    grpc_server =
+      {GRPC.Server.Supervisor,
+       endpoint: NervesFlutterExample.RPC.Endpoint, port: 50051, start_server: true}
 
     children =
-      [api_server] ++ children(Nerves.Runtime.mix_target())
+      [grpc_server] ++ children(Nerves.Runtime.mix_target())
 
     opts = [strategy: :one_for_one, name: NervesFlutterExample.Supervisor]
     Supervisor.start_link(children, opts)

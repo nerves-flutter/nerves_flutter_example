@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/api.dart';
+import 'package:flutter_app/generated/rpc_schema.pbgrpc.dart';
 import 'package:flutter_app/loader.dart';
 import 'package:flutter_app/nerves_logo.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -11,7 +12,7 @@ class SystemInfoScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final systemInfo = useState<Map?>(null);
+    final systemInfo = useState<SystemInformation?>(null);
 
     useMemoized(() async {
       systemInfo.value = await API.getSystemInfo();
@@ -27,15 +28,24 @@ class SystemInfoScreen extends HookWidget {
     );
   }
 
-  buildWidgetList(Map systemInfo) {
-    List<Widget> items = [];
-
-    systemInfo.forEach((key, value) {
-      items.add(Padding(
-          padding: const EdgeInsets.all(3.0),
-          child: ListTile(title: Text(key), subtitle: Text(value.toString()))));
-    });
-
-    return items;
+  buildWidgetList(SystemInformation systemInfo) {
+    const padding = EdgeInsets.all(3.0);
+    return [
+      Padding(
+          padding: padding,
+          child: ListTile(
+              title: const Text("Hostname"),
+              subtitle: Text(systemInfo.hostname))),
+      Padding(
+          padding: padding,
+          child: ListTile(
+              title: const Text("Serial Number"),
+              subtitle: Text(systemInfo.serialNumber))),
+      Padding(
+          padding: padding,
+          child: ListTile(
+              title: const Text("Firmware Product"),
+              subtitle: Text(systemInfo.fwProduct)))
+    ];
   }
 }

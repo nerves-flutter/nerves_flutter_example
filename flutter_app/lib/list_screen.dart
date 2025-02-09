@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/api.dart';
 import 'package:flutter_app/nerves_logo.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
@@ -12,6 +13,25 @@ class ListScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final List<Widget> specialButtons = [
+      // Reboot Button
+      Card(
+          child: InkWell(
+        onTap: () {
+          showRebootConfirm(context);
+        },
+        child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(Icons.refresh_rounded, size: 64),
+              Text("Reboot Device", style: theme.textTheme.titleLarge),
+            ]),
+      ))
+    ];
+
     return Scaffold(
       appBar: AppBar(title: const NervesLogo(height: 32), elevation: 1),
       body: GridView.count(
@@ -22,7 +42,7 @@ class ListScreen extends HookWidget {
         mainAxisSpacing: 10,
         crossAxisCount: 4,
         childAspectRatio: (1 / .5),
-        children: buildListItems(context),
+        children: buildListItems(context).toList() + specialButtons,
       ),
     );
   }
@@ -48,5 +68,37 @@ class ListScreen extends HookWidget {
     }
 
     return list;
+  }
+
+  void showRebootConfirm(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Reboot Device?'),
+          content: const Text("Are you sure you want to reboot the device?"),
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('Yes, Reboot'),
+              onPressed: () {
+                API.rebootSystem();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+import "google/api/annotations.proto";
+
+package NervesFlutterExample;
+
+message Empty {}
+
+// The actual RPC service definition with HTTP/2 endpoints defined
+service RPC {
+  rpc GetSystemInfo (Empty) returns (SystemInformation) {
+    option (google.api.http) = {
+      get: "/getSystemInfo"
+    };
+  }
+
+  rpc WifiScan (Empty) returns (WiFiScanResult) {
+    option (google.api.http) = {
+        get: "/wifiScan"
+    };
+  }
+
+  rpc RebootSystem (Empty) returns (Empty) {
+    option (google.api.http) = {
+        get: "/rebootSystem"
+    };
+  }
+
+  rpc HaltSystem (Empty) returns (Empty) {
+    option (google.api.http) = {
+        get: "/haltSystem"
+    };
+  }
+}
+
+// Network Info Structures
+message WiFiNetworkInfo {
+    string ssid = 1;
+    string bssid = 2;
+    int32 channel = 3;
+    int32 frequency = 4;
+    int32 signal_dbm = 5;
+    int32 signal_percent = 6;
+    repeated string flags = 7;
+}
+
+message WiFiScanResult {
+    repeated WiFiNetworkInfo networks = 1;
+}
+
+// System Information Structures
+message SystemInformation {
+    string hostname = 1;
+    string serial_number = 2;
+    string mix_target = 3;
+    bool fw_valid = 4;
+    string fw_platform = 5;
+    string fw_architecture = 6;
+    string fw_product = 7;
+    string fw_version = 8;
+    string fw_uuid = 9;
+}
