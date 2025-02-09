@@ -20,6 +20,12 @@ service RPC {
     };
   }
 
+  rpc StreamLogs (Empty) returns (stream LogEntry) {
+    option (google.api.http) = {
+        get: "/streamLogs"
+    };
+  }
+
   rpc RebootSystem (Empty) returns (Empty) {
     option (google.api.http) = {
         get: "/rebootSystem"
@@ -31,6 +37,14 @@ service RPC {
         get: "/haltSystem"
     };
   }
+}
+
+// Log struct
+message LogEntry {
+    string message = 1;
+    int64 timestamp = 2;
+    string level = 3;
+    string module = 4;
 }
 
 // Network Info Structures

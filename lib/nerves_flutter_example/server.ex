@@ -62,6 +62,16 @@ defmodule NervesFlutterExample.RPC.Server do
     }
   end
 
+  def stream_logs(_request, stream) do
+    GenServer.start_link(NervesFlutterExample.LogServer, stream: stream)
+
+    Task.async(fn ->
+      Process.sleep(:infinity)
+      :ok
+    end)
+    |> Task.await(:infinity)
+  end
+
   @spec reboot_system(NervesFlutterExample.Empty.t(), GRPC.Server.Stream.t()) ::
           no_return
   def reboot_system(_request, _stream) do

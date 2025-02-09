@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/api.dart';
 import 'package:flutter_app/intro_screen.dart';
 import 'package:flutter_app/list_screen.dart';
+import 'package:flutter_app/log_screen.dart';
 import 'package:flutter_app/system_info_screen.dart';
 import 'package:flutter_app/wifi_screen.dart';
 
@@ -47,7 +48,8 @@ class MyApp extends HookWidget {
           '/': (context) => const IntroScreen(),
           "/list": (context) => const ListScreen(),
           '/info': (context) => const SystemInfoScreen(),
-          '/wifi': (context) => const WiFiScreen()
+          '/wifi': (context) => const WiFiScreen(),
+          "/logs": (context) => const LogScreen(),
         },
         builder: (BuildContext context, Widget? child) {
           return Scaffold(

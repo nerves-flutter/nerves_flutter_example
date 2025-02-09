@@ -22,6 +22,23 @@ const Empty$json = {
 final $typed_data.Uint8List emptyDescriptor = $convert.base64Decode(
     'CgVFbXB0eQ==');
 
+@$core.Deprecated('Use logEntryDescriptor instead')
+const LogEntry$json = {
+  '1': 'LogEntry',
+  '2': [
+    {'1': 'message', '3': 1, '4': 1, '5': 9, '10': 'message'},
+    {'1': 'timestamp', '3': 2, '4': 1, '5': 3, '10': 'timestamp'},
+    {'1': 'level', '3': 3, '4': 1, '5': 9, '10': 'level'},
+    {'1': 'module', '3': 4, '4': 1, '5': 9, '10': 'module'},
+  ],
+};
+
+/// Descriptor for `LogEntry`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List logEntryDescriptor = $convert.base64Decode(
+    'CghMb2dFbnRyeRIYCgdtZXNzYWdlGAEgASgJUgdtZXNzYWdlEhwKCXRpbWVzdGFtcBgCIAEoA1'
+    'IJdGltZXN0YW1wEhQKBWxldmVsGAMgASgJUgVsZXZlbBIWCgZtb2R1bGUYBCABKAlSBm1vZHVs'
+    'ZQ==');
+
 @$core.Deprecated('Use wiFiNetworkInfoDescriptor instead')
 const WiFiNetworkInfo$json = {
   '1': 'WiFiNetworkInfo',

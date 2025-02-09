@@ -29,6 +29,10 @@ class RPCClient extends $grpc.Client {
       '/NervesFlutterExample.RPC/WifiScan',
       ($0.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.WiFiScanResult.fromBuffer(value));
+  static final _$streamLogs = $grpc.ClientMethod<$0.Empty, $0.LogEntry>(
+      '/NervesFlutterExample.RPC/StreamLogs',
+      ($0.Empty value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.LogEntry.fromBuffer(value));
   static final _$rebootSystem = $grpc.ClientMethod<$0.Empty, $0.Empty>(
       '/NervesFlutterExample.RPC/RebootSystem',
       ($0.Empty value) => value.writeToBuffer(),
@@ -50,6 +54,10 @@ class RPCClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.WiFiScanResult> wifiScan($0.Empty request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$wifiScan, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.LogEntry> streamLogs($0.Empty request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$streamLogs, $async.Stream.fromIterable([request]), options: options);
   }
 
   $grpc.ResponseFuture<$0.Empty> rebootSystem($0.Empty request, {$grpc.CallOptions? options}) {
@@ -80,6 +88,13 @@ abstract class RPCServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
         ($0.WiFiScanResult value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.Empty, $0.LogEntry>(
+        'StreamLogs',
+        streamLogs_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($0.LogEntry value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.Empty, $0.Empty>(
         'RebootSystem',
         rebootSystem_Pre,
@@ -104,6 +119,10 @@ abstract class RPCServiceBase extends $grpc.Service {
     return wifiScan(call, await request);
   }
 
+  $async.Stream<$0.LogEntry> streamLogs_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async* {
+    yield* streamLogs(call, await request);
+  }
+
   $async.Future<$0.Empty> rebootSystem_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
     return rebootSystem(call, await request);
   }
@@ -114,6 +133,7 @@ abstract class RPCServiceBase extends $grpc.Service {
 
   $async.Future<$0.SystemInformation> getSystemInfo($grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.WiFiScanResult> wifiScan($grpc.ServiceCall call, $0.Empty request);
+  $async.Stream<$0.LogEntry> streamLogs($grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.Empty> rebootSystem($grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.Empty> haltSystem($grpc.ServiceCall call, $0.Empty request);
 }

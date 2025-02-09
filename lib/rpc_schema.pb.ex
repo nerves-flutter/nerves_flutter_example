@@ -3,6 +3,16 @@ defmodule NervesFlutterExample.Empty do
   use Protobuf, protoc_gen_elixir_version: "0.14.0", syntax: :proto3
 end
 
+defmodule NervesFlutterExample.LogEntry do
+  @moduledoc false
+  use Protobuf, protoc_gen_elixir_version: "0.14.0", syntax: :proto3
+
+  field :message, 1, type: :string
+  field :timestamp, 2, type: :int64
+  field :level, 3, type: :string
+  field :module, 4, type: :string
+end
+
 defmodule NervesFlutterExample.WiFiNetworkInfo do
   @moduledoc false
   use Protobuf, protoc_gen_elixir_version: "0.14.0", syntax: :proto3
@@ -66,6 +76,20 @@ defmodule NervesFlutterExample.RPC.Service do
         additional_bindings: [],
         response_body: "",
         pattern: {:get, "/wifiScan"},
+        __unknown_fields__: []
+      }
+    }
+  })
+
+  rpc(:StreamLogs, NervesFlutterExample.Empty, stream(NervesFlutterExample.LogEntry), %{
+    http: %{
+      type: Google.Api.PbExtension,
+      value: %Google.Api.HttpRule{
+        selector: "",
+        body: "",
+        additional_bindings: [],
+        response_body: "",
+        pattern: {:get, "/streamLogs"},
         __unknown_fields__: []
       }
     }

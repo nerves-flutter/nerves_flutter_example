@@ -33,6 +33,10 @@ class API {
     return await _client!.wifiScan(_empty);
   }
 
+  static ResponseStream<LogEntry> getLogStream() {
+    return _client!.streamLogs(_empty);
+  }
+
   static Future<Empty> rebootSystem() async {
     return await _client!.rebootSystem(_empty);
   }

@@ -20,7 +20,14 @@ defmodule NervesFlutterExample.Application do
       [grpc_server] ++ children(Nerves.Runtime.mix_target())
 
     opts = [strategy: :one_for_one, name: NervesFlutterExample.Supervisor]
+
+    :timer.apply_interval(:timer.seconds(5), __MODULE__, :log_time, [])
+
     Supervisor.start_link(children, opts)
+  end
+
+  def log_time() do
+    Logger.info("Current monotonic time is: #{:erlang.monotonic_time()}")
   end
 
   # List all child processes to be supervised

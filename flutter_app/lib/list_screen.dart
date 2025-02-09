@@ -5,7 +5,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 const demos = [
   {"name": "Device Info", "route": "/info", "icon": Icons.device_hub_rounded},
-  {"name": "WiFi Scan", "route": "/wifi", "icon": Icons.wifi_find}
+  {"name": "WiFi Scan", "route": "/wifi", "icon": Icons.wifi_find},
+  {"name": "Logs", "route": "/logs", "icon": Icons.receipt_long_rounded}
 ];
 
 class ListScreen extends HookWidget {
