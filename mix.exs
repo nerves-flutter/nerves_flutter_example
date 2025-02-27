@@ -38,7 +38,7 @@ defmodule NervesFlutterExample.MixProject do
       {:nerves_pack, "~> 0.7.1", targets: @all_targets},
       {:nerves_system_rpi4, "~> 1.29.0", runtime: false, targets: :rpi4},
       {:nerves_system_rpi5, "~> 0.4.0", runtime: false, targets: :rpi5},
-      {:nerves_flutter_support, path: "../nerves_flutter_support"},
+      {:nerves_flutter_support, git: "https://github.com/nerves-flutter/nerves_flutter_support"},
       {:circuits_i2c, "~> 2.0"},
 
       # Flutter Example Deps
