@@ -9,7 +9,6 @@ class NervesLogo extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     final isDarkMode = theme.brightness == Brightness.dark;
 
     final nervesLogo = SvgPicture.asset(

@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:circular_buffer/circular_buffer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/api.dart';
