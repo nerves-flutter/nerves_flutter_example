@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/api.dart';
 import 'package:flutter_app/nerves_logo.dart';
@@ -6,7 +8,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 const demos = [
   {"name": "Device Info", "route": "/info", "icon": Icons.device_hub_rounded},
   {"name": "WiFi Scan", "route": "/wifi", "icon": Icons.wifi_find},
-  {"name": "Logs", "route": "/logs", "icon": Icons.receipt_long_rounded}
+  {"name": "Logs", "route": "/logs", "icon": Icons.receipt_long_rounded},
 ];
 
 class ListScreen extends HookWidget {
@@ -16,6 +18,21 @@ class ListScreen extends HookWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final List<Widget> specialButtons = [
+      // Toggle HUD button
+      Card(
+          child: InkWell(
+        onTap: () {
+          Process.killPid(pid, ProcessSignal.sigusr1);
+        },
+        child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Icon(Icons.hub_rounded, size: 64),
+              Text("Toggle HUD", style: theme.textTheme.titleLarge),
+            ]),
+      )),
       // Reboot Button
       Card(
           child: InkWell(

@@ -40,7 +40,12 @@ defmodule NervesFlutterExample.Application do
     dri_card = get_output_card()
 
     launch_env = %{
-      "FLUTTER_DRM_DEVICE" => "/dev/dri/#{dri_card}"
+      "FLUTTER_DRM_DEVICE" => "/dev/dri/#{dri_card}",
+      "GALLIUM_HUD" => "cpu+fps",
+      "GALLIUM_HUD_PERIOD" => "0.25",
+      "GALLIUM_HUD_SCALE" => "3",
+      "GALLIUM_HUD_VISIBLE" => "false",
+      "GALLIUM_HUD_TOGGLE_SIGNAL" => "10"
     }
 
     [
