@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/animation_screen.dart';
 import 'package:flutter_app/api.dart';
 import 'package:flutter_app/intro_screen.dart';
 import 'package:flutter_app/list_screen.dart';
@@ -49,6 +50,7 @@ class MyApp extends HookWidget {
           "/list": (context) => const ListScreen(),
           '/info': (context) => const SystemInfoScreen(),
           '/wifi': (context) => const WiFiScreen(),
+          '/animations': (context) => const AnimationScreen(),
           "/logs": (context) => const LogScreen(),
         },
         builder: (BuildContext context, Widget? child) {

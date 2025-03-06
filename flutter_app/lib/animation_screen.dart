@@ -4,56 +4,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/api.dart';
 import 'package:flutter_app/nerves_logo.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 const demos = [
   {"name": "Device Info", "route": "/info", "icon": Icons.device_hub_rounded},
   {"name": "WiFi Scan", "route": "/wifi", "icon": Icons.wifi_find},
-  {
-    "name": "Animation Demo",
-    "route": "/animations",
-    "icon": Icons.animation_rounded
-  },
   {"name": "Logs", "route": "/logs", "icon": Icons.receipt_long_rounded},
 ];
 
-class ListScreen extends HookWidget {
-  const ListScreen({super.key});
+class AnimationScreen extends HookWidget {
+  const AnimationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final List<Widget> specialButtons = [
-      // Toggle HUD button
-      Card(
-          child: InkWell(
-        onTap: () {
-          Process.killPid(pid, ProcessSignal.sigusr1);
-        },
-        child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Icon(Icons.hub_rounded, size: 64),
-              Text("Toggle HUD", style: theme.textTheme.titleLarge),
-            ]),
-      )),
-      // Reboot Button
-      Card(
-          child: InkWell(
-        onTap: () {
-          showRebootConfirm(context);
-        },
-        child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Icon(Icons.refresh_rounded, size: 64),
-              Text("Reboot Device", style: theme.textTheme.titleLarge),
-            ]),
-      ))
+    final loaders = [
+      LoadingAnimationWidget.staggeredDotsWave(
+        color: Colors.blueAccent,
+        size: 75,
+      ),
+      LoadingAnimationWidget.threeRotatingDots(
+          color: Colors.blueAccent, size: 75),
+      LoadingAnimationWidget.dotsTriangle(color: Colors.blueAccent, size: 75),
+      LoadingAnimationWidget.waveDots(color: Colors.blueAccent, size: 75),
+      LoadingAnimationWidget.hexagonDots(color: Colors.blueAccent, size: 75),
+      LoadingAnimationWidget.progressiveDots(
+          color: Colors.blueAccent, size: 75),
+      LoadingAnimationWidget.beat(color: Colors.blueAccent, size: 75),
+      LoadingAnimationWidget.halfTriangleDot(color: Colors.blueAccent, size: 75)
     ];
+
+    final List<Widget> tiles = [];
+
+    for (final loader in loaders) {
+      tiles.add(Card(
+          child: InkWell(
+        child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [loader]),
+      )));
+    }
 
     return Scaffold(
       appBar: AppBar(title: const NervesLogo(height: 32), elevation: 1),
@@ -65,7 +56,7 @@ class ListScreen extends HookWidget {
         mainAxisSpacing: 10,
         crossAxisCount: 4,
         childAspectRatio: (1 / .5),
-        children: buildListItems(context).toList() + specialButtons,
+        children: tiles,
       ),
     );
   }
