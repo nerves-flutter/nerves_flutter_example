@@ -57,7 +57,7 @@ defmodule NervesFlutterExample.MixProject do
       # NOTE: Notice the added `&NervesFlutterSupport.BuildFlutterApp.run/1` reference
       # This enabled the automatic compilation of a Flutter app located at `./flutter_app`, and release of it into the `./priv` directory.
       # This enables "zero-configuration" Flutter app embedding.
-      steps: [&Nerves.Release.init/1, &NervesFlutterSupport.BuildFlutterApp.run/1, :assemble],
+      steps: [&Nerves.Release.init/1, &NervesFlutterSupport.InstallRuntime.run/1, &NervesFlutterSupport.BuildFlutterApp.run/1, :assemble],
       # You can configure the builder's input and output directories:
       # flutter: [
       #   project_dir: "/path/to/flutter_app/",
